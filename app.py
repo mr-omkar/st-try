@@ -16,6 +16,8 @@ df["LoanAmount"]= df["LoanAmount"].fillna(df["LoanAmount"].mean())
 df["Loan_Amount_Term"]= df["Loan_Amount_Term"].fillna(df["Loan_Amount_Term"].median())
 df["Credit_History"]= df["Credit_History"].fillna(df["Credit_History"].median())
 
+df["Credit_History"] = df["Credit_History"].astype(object)
+df["Loan_Amount_Term"] = df["Loan_Amount_Term"].astype(object)
 
 ar = df.head(1).drop(["Loan_ID","Gender","Loan_Status"],axis=1)
 ar["LoanAmount"] = df["LoanAmount"].mean()
