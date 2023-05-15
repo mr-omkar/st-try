@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import dill
 
+st.write("Hello There")
 df = pd.read_csv("training_set.csv")
 df["Gender"]= df["Gender"].fillna(df["Gender"].mode()[0])
 df["Married"]= df["Married"].fillna(df["Married"].mode()[0])
@@ -19,11 +20,17 @@ df["Credit_History"]= df["Credit_History"].fillna(df["Credit_History"].median())
 df["Credit_History"] = df["Credit_History"].astype(object)
 df["Loan_Amount_Term"] = df["Loan_Amount_Term"].astype(object)
 
-ar = df.head(1).drop(["Loan_ID","Gender","Loan_Status"],axis=1)
-ar["LoanAmount"] = df["LoanAmount"].mean()
-print(ar.values)
 
-
-m1 = dill.load(open("loanPrepo_p1.pkl","rb"))
-r = m1.transform(ar)
-print(r)
+for i in range(0,2,1):
+    ar = df.head(1).drop(["Loan_ID","Gender","Loan_Status"],axis=1)
+    ar["LoanAmount"] = df["LoanAmount"].mean()
+    print(ar.values)
+    
+    m1 = dill.load(open("loanPrepo_p1.pkl","rb"))
+    r = m1.transform(ar)
+    r = pd.DataFrame(r)
+    print(r)
+    lm = load_model("loanModel_M1.h5")
+    res = lm.predict(r)
+    print("result = ", res)
+    st.write(res)
